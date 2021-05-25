@@ -3,10 +3,10 @@
   "username": "aribami",
   "name": null,
   "userimg": "https://avatars.githubusercontent.com/u/84331768?v=4",
-  "sort": "created",
+  "sort": "star",
   "order": "asc",
   "includeFork": false,
-  "theme": "light.css",
+  "theme": "dark.css",
   "types": [
    "all"
   ],
