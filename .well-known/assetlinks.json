@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "io.github.aribami.twa",
+                     "sha256_cert_fingerprints": ["C9:8F:98:81:A3:D5:A1:D9:75:9D:B8:A6:41:65:A0:66:76:E0:D8:CD:E6:3C:CB:CD:44:30:E1:4B:B0:CE:DF:3C"] }
+      }
+]
