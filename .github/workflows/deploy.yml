@@ -1,0 +1,51 @@
+name: Deploy Vite Site to GitHub Pages
+
+on:
+  push:
+    branches: ["master"] # Or "main", depending on your default branch name
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Use your project's Node version
+          cache: 'npm'
+          cache-dependency-path: vite-project/package-lock.json
+      - name: Install Dependencies
+        # Make sure this points to your vite-project folder!
+        run: cd vite-project && npm ci 
+      - name: Build Project
+        # Make sure this points to your vite-project folder!
+        run: cd vite-project && npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # This points to the dist folder Vite creates inside vite-project
+          path: './vite-project/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
