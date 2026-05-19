@@ -28,14 +28,12 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: |
-          cd vite-project
-          npm install
+        run: npm install
+        working-directory: vite-project
 
       - name: Build
-        run: |
-          cd vite-project
-          npm run build
+        run: npm run build
+        working-directory: vite-project
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -43,13 +41,12 @@ jobs:
           path: vite-project/dist
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    needs: build
-
-    runs-on: ubuntu-latest
 
     steps:
       - name: Deploy to GitHub Pages
