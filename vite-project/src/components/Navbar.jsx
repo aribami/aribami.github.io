@@ -1,29 +1,32 @@
 export default function Navbar() {
-    return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black/30 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <h1 className="text-2xl font-black">
-            AK.
-          </h1>
-  
-          <div className="hidden md:flex gap-8 text-slate-300">
-            <a href="#" className="hover:text-white transition">
-              About
-            </a>
-  
-            <a href="#" className="hover:text-white transition">
-              Skills
-            </a>
-  
-            <a href="#" className="hover:text-white transition">
-              Projects
-            </a>
-  
-            <a href="#" className="hover:text-white transition">
-              Contact
-            </a>
-          </div>
+  const navItems = [
+    ["About", "#about"],
+    ["Skills", "#skills"],
+    ["Experience", "#experience"],
+    ["Projects", "#projects"],
+    ["Achievements", "#achievements"],
+    ["Contact", "#contact"]
+  ]
+
+  return (
+    <nav className="fixed top-0 z-50 w-full border-b-2 border-black bg-[#fff7ed]/90 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+        <div className="rounded-full border-2 border-black bg-[#facc15] px-5 py-2 text-2xl font-black card-shadow">
+          AK.
         </div>
-      </nav>
-    )
-  }
+
+        <div className="hidden gap-3 md:flex">
+          {navItems.map(([label, link]) => (
+            <a
+              key={label}
+              href={link}
+              className="rounded-full border-2 border-black bg-white px-5 py-2 font-bold transition hover:-translate-y-1 hover:bg-[#c4b5fd]"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  )
+}
