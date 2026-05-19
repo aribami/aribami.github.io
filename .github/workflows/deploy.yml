@@ -2,50 +2,55 @@ name: Deploy Vite Site to GitHub Pages
 
 on:
   push:
-    branches: ["master"] # Change this to "main" if your default branch is named main
+    branches:
+      - master
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Upgraded to fix the Vite customEvent error
-          cache: 'npm'
-          cache-dependency-path: vite-project/package-lock.json
-          
-      - name: Install Dependencies
-        run: cd vite-project && npm ci 
-        
-      - name: Build Project
-        run: cd vite-project && npm run build
-        
+          node-version: 22
+
+      - name: Install dependencies
+        run: |
+          cd vite-project
+          npm install
+
+      - name: Build
+        run: |
+          cd vite-project
+          npm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './vite-project/dist'
+          path: vite-project/dist
 
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     needs: build
+
     runs-on: ubuntu-latest
-    name: Deploy
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
